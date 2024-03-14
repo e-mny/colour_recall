@@ -8,15 +8,16 @@ import Grid from '@mui/material/Grid';
 interface GameGridProps {
   grid: GridSquare[][];
   onSquareClick: (row: number, col: number) => void;
+  showInitialGrid: boolean;
 }
 
-const Item = styled(Paper)<{ shape: string }>(({ theme, shape }) => ({
+const Item = styled(Paper)<{ shape: string; isGreen: boolean }>(({ theme, shape, isGreen }) => ({
   width: '150px',
   height: '150px',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : 'gray',
+  backgroundColor: isGreen ? 'green' : (theme.palette.mode === 'dark' ? '#1A2027' : 'gray'), // Conditionally apply green color
   ...theme.typography.body2,
   padding: '10px',
   margin: '10px',
@@ -25,16 +26,17 @@ const Item = styled(Paper)<{ shape: string }>(({ theme, shape }) => ({
   clipPath: shape === 'circle' ? 'circle(50% at 50% 50%)' : 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)',
 }));
 
-const GameGrid: React.FC<GameGridProps> = ({ grid, onSquareClick }) => {
+const GameGrid: React.FC<GameGridProps> = ({ grid, onSquareClick, showInitialGrid }) => {
   return (
     <Box sx={{ flexGrow: 1 }}>
       {grid.map((row, rowIndex) => (
-        <Grid container item key={rowIndex} spacing={3}>
+        <Grid container item key={rowIndex} spacing={4}>
           {row.map((square, colIndex) => (
             <Grid item xs={4} key={colIndex}>
               <Item
                 onClick={() => onSquareClick(rowIndex, colIndex)}
-                shape = {'triangle'}
+                shape={'triangle'}
+                isGreen={showInitialGrid && square.isGreen} // Conditionally apply green color based on showInitialGrid prop
               >
               </Item>
             </Grid>

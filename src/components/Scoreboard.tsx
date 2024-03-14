@@ -1,15 +1,13 @@
 import React from 'react';
 
 interface ScoreBoardProps {
-  attempts: number;
   level: number;
 }
 
-const ScoreBoard: React.FC<ScoreBoardProps> = ({ attempts, level }) => {
+const ScoreBoard: React.FC<ScoreBoardProps> = ({ level }) => {
   return (
     <div>
-      <p>Level: {level}</p>
-      <p>Attempts: {attempts}</p>
+      <p className='text-3xl mb-4'>Level: {level}</p>
     </div>
   );
 };

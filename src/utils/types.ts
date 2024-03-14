@@ -6,6 +6,5 @@ export interface GridSquare {
 
 export interface Score {
   level: number;
-  attempts: number;
   timeTaken: number;
 }

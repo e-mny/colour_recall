@@ -47,23 +47,30 @@ export const checkUserSelection = (grid: GridSquare[][], selectedCoords: [number
   // Sort the coordinate strings and compare
   const sortedSelectedCoordStrings = selectedCoordStrings.sort();
   const sortedGreenSquareCoordStrings = greenSquareCoordStrings.sort();
-  const isMatch = JSON.stringify(sortedSelectedCoordStrings) === JSON.stringify(sortedGreenSquareCoordStrings);
-  const correctElements = sortedSelectedCoordStrings.filter(coord => sortedGreenSquareCoordStrings.includes(coord)).length;
-  console.log('Number of correct elements:', correctElements, "out of", sortedGreenSquareCoordStrings.length);
 
+  // For empty selection, return false and 0 correct elements
+  if (sortedSelectedCoordStrings.length === 0) {
+    return [false, 0]
+  };
+
+  let isMatch = JSON.stringify(sortedSelectedCoordStrings) === JSON.stringify(sortedGreenSquareCoordStrings);
+  const correctElements = sortedSelectedCoordStrings.filter(coord => sortedGreenSquareCoordStrings.includes(coord)).length;
+
+  // Make sure correctElements == number of green squares
+  if (sortedGreenSquareCoordStrings.length !== sortedSelectedCoordStrings.length) {
+    isMatch = false;
+  }
+  
+  console.log('Number of correct elements:', correctElements, "out of", sortedGreenSquareCoordStrings.length);
+  console.log('isMatch:', isMatch)
   return [isMatch, correctElements];
 };
 
 // Increase the difficulty level based on the current level
 export const increaseDifficulty = (level: number): number => {
-  return level + 1; // Increase level by 1 for simplicity
+  return level + 1;
 };
 
-// Calculate the score based on the number of attempts and time taken
-export const calculateScore = (attempts: number, timeTaken: number): number => {
-  // Example scoring logic: Score = (1 / attempts) * (100 / timeTaken)
-  return Math.floor((1 / attempts) * (100 / timeTaken));
-};
 
 // Helper function to determine grid size based on level
 const getGridSize = (level: number): number => {
