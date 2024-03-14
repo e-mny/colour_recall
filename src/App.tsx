@@ -4,7 +4,7 @@ import CountdownTimer from './components/CountdownTimer';
 import GameGrid from './components/GameGrid';
 import ScoreBoard from './components/ScoreBoard';
 import GameOverOverlay from './components/GameOverOverlay';
-import { generateGrid, checkUserSelection, increaseDifficulty } from './utils/gameLogic';
+import { generateGrid, checkUserSelection, increaseDifficulty, startMovingSquares } from './utils/gameLogic';
 import { GridSquare, Score } from './utils/types';
 
 const App: React.FC = () => {
@@ -16,19 +16,27 @@ const App: React.FC = () => {
   const [gameOver, setGameOver] = useState(false);
 
   useEffect(() => {
+    if (level === 3) {
+      startMovingSquares(grid);
+    }
+  }, [level, grid]);
+
+  useEffect(() => {
     if (level > 0) {
-      const newGrid = generateGrid(level);
-      setGrid(newGrid);
-      setTime(5);
-      setShowInitialGrid(true);
-      setTimeout(() => {
-        setShowInitialGrid(false);
-      }, 3000);
+      if (!gameOver){
+
+        const newGrid = generateGrid(level);
+        setGrid(newGrid);
+        setTime(5);
+        setShowInitialGrid(true);
+        setTimeout(() => {
+          setShowInitialGrid(false);
+        }, 3000);
+      }
     } else {
-      setShowInitialGrid(true);
       setGrid([]);
     }
-  }, [level]);
+  }, [level, gameOver]);
 
   const startGame = () => {
     setLevel(increaseDifficulty(level));
@@ -72,9 +80,6 @@ const App: React.FC = () => {
       }, 3000);
     } else {
       console.log("Time's up! Game over.");
-      setTimeout(() => {
-        setShowInitialGrid(true);
-      }, 1000);
       setTimeout(() => {
         setGameOver(true);
       }, 3000);

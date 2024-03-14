@@ -87,3 +87,29 @@ const getGreenSquareCount = (level: number): number => {
   if (level <= 7) return 5;
   return level;
 };
+
+// Function to start moving squares when level is 3
+export const startMovingSquares = (grid: GridSquare[][]) => {
+  const interval = setInterval(() => {
+    moveSquares(grid);
+  }, 1000); // Move squares every second
+
+  // Stop moving squares after 30 seconds (for demonstration purposes)
+  setTimeout(() => {
+    clearInterval(interval);
+  }, 30000); // Stop after 30 seconds
+};
+
+// Function to randomly move squares across the screen
+const moveSquares = (grid: GridSquare[][]) => {
+  const gridSize = grid.length;
+  grid.forEach(row => {
+    row.forEach(square => {
+      if (square.isGreen) {
+        const newRow = Math.floor(Math.random() * gridSize);
+        const newCol = Math.floor(Math.random() * gridSize);
+        grid[newRow][newCol] = { ...square, isGreen: true }; // Move the square to a new random position
+      }
+    });
+  });
+};

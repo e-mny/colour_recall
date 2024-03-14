@@ -11,7 +11,7 @@ interface GameGridProps {
   showInitialGrid: boolean;
 }
 
-const Item = styled(Paper)<{ shape: string; isGreen: boolean }>(({ theme, shape, isGreen }) => ({
+const Item = styled(Paper)<{ shape: string; isGreen: boolean; isSelected: boolean }>(({ theme, shape, isGreen, isSelected }) => ({
   width: '150px',
   height: '150px',
   display: 'flex',
@@ -24,6 +24,12 @@ const Item = styled(Paper)<{ shape: string; isGreen: boolean }>(({ theme, shape,
   textAlign: 'center',
   color: theme.palette.text.secondary,
   clipPath: shape === 'circle' ? 'circle(50% at 50% 50%)' : 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)',
+  transition: 'outline 0.3s', // Add transition property for smooth outline animation
+  outline: 'none', // Set initial outline to none
+  '&:hover': {
+    outline: '2px solid white', // Show white outline on hover
+  },
+  ...(isSelected && { outline: '2px solid red' }), // Apply red outline if isSelected is true
 }));
 
 const GameGrid: React.FC<GameGridProps> = ({ grid, onSquareClick, showInitialGrid }) => {
@@ -35,8 +41,9 @@ const GameGrid: React.FC<GameGridProps> = ({ grid, onSquareClick, showInitialGri
             <Grid item xs={4} key={colIndex}>
               <Item
                 onClick={() => onSquareClick(rowIndex, colIndex)}
-                shape={'triangle'}
-                isGreen={showInitialGrid && square.isGreen} // Conditionally apply green color based on showInitialGrid prop
+                shape={'circle'}
+                isGreen={showInitialGrid && square.isGreen}
+                isSelected={square.isSelected}
               >
               </Item>
             </Grid>
