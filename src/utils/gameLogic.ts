@@ -22,11 +22,12 @@ export const generateGrid = (level: number): GridSquare[][] => {
     }
   }
 
-  grid = [
-    [{ id: 1, isGreen: true, isSelected: false }, { id: 2, isGreen: false, isSelected: false }, { id: 3, isGreen: false, isSelected: false }],
-    [{ id: 4, isGreen: true, isSelected: false }, { id: 5, isGreen: false, isSelected: false }, { id: 6, isGreen: false, isSelected: false }],
-    [{ id: 7, isGreen: true, isSelected: false }, { id: 8, isGreen: false, isSelected: false }, { id: 9, isGreen: false, isSelected: false }],
-  ]
+  // For debugging purposes
+  // grid = [
+  //   [{ id: 1, isGreen: true, isSelected: false }, { id: 2, isGreen: false, isSelected: false }, { id: 3, isGreen: false, isSelected: false }],
+  //   [{ id: 4, isGreen: true, isSelected: false }, { id: 5, isGreen: false, isSelected: false }, { id: 6, isGreen: false, isSelected: false }],
+  //   [{ id: 7, isGreen: true, isSelected: false }, { id: 8, isGreen: false, isSelected: false }, { id: 9, isGreen: false, isSelected: false }],
+  // ]
   return grid;
 };
 
