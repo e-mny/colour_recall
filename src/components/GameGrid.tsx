@@ -41,7 +41,7 @@ const GameGrid: React.FC<GameGridProps> = ({ grid, onSquareClick, showInitialGri
             <Grid item xs={4} key={colIndex}>
               <Item
                 onClick={() => onSquareClick(rowIndex, colIndex)}
-                shape={'circle'}
+                shape={'triangle'}
                 isGreen={showInitialGrid && square.isGreen}
                 isSelected={square.isSelected}
               >
