@@ -23,8 +23,8 @@ const GameOverOverlay: React.FC<GameOverOverlayProps> = ({ onTryAgain }) => {
   return (
     <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-90 flex items-center justify-center z-50" style={overlayStyle}>
       <div className="text-center text-white">
-        <p className="text-6xl m-12">Game Over.</p>
-        <button className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg text-4xl m-12 text-white" onClick={onTryAgain}>Try Again</button>
+        <p className="text-5xl sm:text-4xl md:text-5xl lg:text-6xl m-12">Game Over.</p>
+        <button className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg text-3xl sm:text-2xl md:text-3xl lg:text-4xl m-12 text-white" onClick={onTryAgain}>Try Again</button>
       </div>
     </div>
   );
