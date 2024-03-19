@@ -25,7 +25,6 @@ const GameOverOverlay: React.FC<GameOverOverlayProps> = ({ onTryAgain }) => {
         opacity: showOverlay ? 1 : 0,
         transition: 'opacity 0.5s ease-in-out', // Define transition for opacity change
         width: isMobile ? '90%' : '100%', // Adjust width for mobile screens
-        maxWidth: '500px', // Limit maximum width for larger screens
         margin: '0 auto', // Center the overlay horizontally
         fontSize: isMobile ? '2rem' : '3rem', // Adjust font size for mobile screens
     };
