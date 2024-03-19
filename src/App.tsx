@@ -39,7 +39,7 @@ const App: React.FC = () => {
     }, [level, gameOver]);
     
     useEffect(() => {
-      if (level == 0){
+      if ((level == 0) || (gameOver)){
         document.body.style.pointerEvents = 'all';
       }
       else if (!showInitialGrid) {
