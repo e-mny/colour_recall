@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/drcs_assessment/static/css/main.79320eb4.css",
-    "main.js": "/drcs_assessment/static/js/main.65cbd21b.js",
+    "main.js": "/drcs_assessment/static/js/main.ffe26fc2.js",
     "index.html": "/drcs_assessment/index.html",
     "main.79320eb4.css.map": "/drcs_assessment/static/css/main.79320eb4.css.map",
-    "main.65cbd21b.js.map": "/drcs_assessment/static/js/main.65cbd21b.js.map"
+    "main.ffe26fc2.js.map": "/drcs_assessment/static/js/main.ffe26fc2.js.map"
   },
   "entrypoints": [
     "static/css/main.79320eb4.css",
-    "static/js/main.65cbd21b.js"
+    "static/js/main.ffe26fc2.js"
   ]
 }
