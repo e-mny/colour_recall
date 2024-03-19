@@ -1,9 +1,10 @@
 import React from 'react';
 import { GridSquare } from '../utils/types';
 import { styled } from '@mui/material/styles';
-import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
+import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
+import { useMediaQuery } from 'react-responsive';
 
 interface GameGridProps {
   grid: GridSquare[][];
@@ -11,39 +12,45 @@ interface GameGridProps {
   showInitialGrid: boolean;
 }
 
-const Item = styled(Paper)<{ shape: string; isGreen: boolean; isSelected: boolean }>(({ theme, shape, isGreen, isSelected }) => ({
-  width: '150px',
-  height: '150px',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  backgroundColor: isGreen ? 'green' : (theme.palette.mode === 'dark' ? '#1A2027' : 'gray'), // Conditionally apply green color
-  ...theme.typography.body2,
-  padding: '10px',
-  margin: '10px',
-  textAlign: 'center',
-  color: theme.palette.text.secondary,
-  clipPath: shape === 'circle' ? 'circle(50% at 50% 50%)' : 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)',
-  transition: 'outline 0.3s', // Add transition property for smooth outline animation
-  outline: 'none', // Set initial outline to none
-  '&:hover': {
-    outline: '2px solid white', // Show white outline on hover
-  },
-  ...(isSelected && { outline: '2px solid red' }), // Apply red outline if isSelected is true
-}));
+const Item = styled(Paper)<{ isGreen: boolean; isSelected: boolean; isMobile: boolean}>(
+  ({ theme, isGreen, isSelected, isMobile}) => ({
+    width: isMobile ? '50px' : '100px',
+    height: isMobile ? '50px' : '100px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: isGreen ? 'green' : theme.palette.mode === 'dark' ? '#1A2027' : 'gray',
+    ...theme.typography.body2,
+    padding: '2px',
+    margin: isMobile ? '25px' : '50px',
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+    transform: 'rotate(45deg)',
+    transition: 'outline 0.2s', 
+    '&:hover': {
+      outline: isSelected ? '5px solid red' : '5px solid white'
+    },
+    outline: isSelected ? '5px solid red' : '5px solid black',
+    outlineWidth: isMobile ? '3px' : '5px',
+  })
+);
+
 
 const GameGrid: React.FC<GameGridProps> = ({ grid, onSquareClick, showInitialGrid }) => {
+  const gridSize = grid.length;
+  const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' })
+
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box style={{ minWidth: isTabletOrMobile ? '100%' : '600px' }}>
       {grid.map((row, rowIndex) => (
         <Grid container item key={rowIndex} spacing={4}>
           {row.map((square, colIndex) => (
-            <Grid item xs={4} key={colIndex}>
+            <Grid item xs={12 / gridSize} key={colIndex}>
               <Item
                 onClick={() => onSquareClick(rowIndex, colIndex)}
-                shape={'triangle'}
                 isGreen={showInitialGrid && square.isGreen}
                 isSelected={square.isSelected}
+                isMobile={isTabletOrMobile}
               >
               </Item>
             </Grid>

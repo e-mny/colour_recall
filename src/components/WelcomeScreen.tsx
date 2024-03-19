@@ -37,9 +37,9 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onStartGame }) => {
       {!showCountdown ? (
         <>
           <h1 className="m-16 text-5xl">Memory Game</h1>
-          <p className="mt-8 text-2xl">Memorize where the <span className="text-lime-500">green</span> diamonds are</p>
+          <p className="mt-8 text-2xl">Memorize where the <span className="text-green-500 uppercase">green</span> diamonds are</p>
           <p className="mb-8 text-2xl">and click on them after they disappear.</p>
-          <button className="btn m-6 text-3xl" onClick={() => {
+          <button className="btn m-6 text-2xl" onClick={() => {
             setShowCountdown(true);
             handleStartGame();
           }}>Start</button>

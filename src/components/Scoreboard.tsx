@@ -6,8 +6,8 @@ interface ScoreBoardProps {
 
 const ScoreBoard: React.FC<ScoreBoardProps> = ({ level }) => {
   return (
-    <div>
-      <p className='text-3xl mb-4'>Level: {level}</p>
+    <div className='text-center justify-center items-center flex text-4xl mb-4 font-'>
+      <p>Level: {level}</p>
     </div>
   );
 };

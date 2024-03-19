@@ -6,9 +6,10 @@ export const generateGrid = (level: number): GridSquare[][] => {
   const greenSquareCount = getGreenSquareCount(level);
   let currentId = 1;
 
+  console.log('Grid size:', gridSize, 'Green square count:', greenSquareCount)
   // Generate an empty 2D grid
   let grid: GridSquare[][] = Array.from({ length: gridSize }, () =>
-    Array.from({ length: gridSize }, () => ({ id: currentId++, isGreen: false, isSelected: false }))
+    Array.from({ length: gridSize }, () => ({ id: currentId++, isGreen: false, isSelected: false, animationDelay: '0s'}))
   );
 
   // Generate random positions for green squares
@@ -28,6 +29,8 @@ export const generateGrid = (level: number): GridSquare[][] => {
   //   [{ id: 4, isGreen: true, isSelected: false }, { id: 5, isGreen: false, isSelected: false }, { id: 6, isGreen: false, isSelected: false }],
   //   [{ id: 7, isGreen: true, isSelected: false }, { id: 8, isGreen: false, isSelected: false }, { id: 9, isGreen: false, isSelected: false }],
   // ]
+
+  
   return grid;
 };
 
@@ -43,6 +46,8 @@ export const checkUserSelection = (grid: GridSquare[][], selectedCoords: [number
   // Convert selected coordinates to strings for comparison
   const selectedCoordStrings = selectedCoords.map(([row, col]) => `${row}-${col}`);
   const greenSquareCoordStrings = greenSquareCoords.map(([row, col]) => `${row}-${col}`);
+  console.log("Correct Coordinates: ", greenSquareCoordStrings)
+  console.log("Selected Coordinates: ", selectedCoordStrings)
 
   
   // Sort the coordinate strings and compare
@@ -63,7 +68,7 @@ export const checkUserSelection = (grid: GridSquare[][], selectedCoords: [number
   }
   
   console.log('Number of correct elements:', correctElements, "out of", sortedGreenSquareCoordStrings.length);
-  console.log('isMatch:', isMatch)
+  // console.log('isMatch:', isMatch)
   return [isMatch, correctElements];
 };
 
@@ -75,42 +80,18 @@ export const increaseDifficulty = (level: number): number => {
 
 // Helper function to determine grid size based on level
 const getGridSize = (level: number): number => {
-  if (level <= 3) return 3;
-  if (level <= 6) return 4;
-  if (level <= 8) return 5;
+  if (level < 3) return 3;
+  if (level < 6) return 4;
+  if (level < 9) return 5;
   return 6;
 };
 
 // Helper function to determine the number of green squares based on level
 const getGreenSquareCount = (level: number): number => {
   if (level === 1) return 3;
-  if (level <= 4) return 4;
-  if (level <= 7) return 5;
-  return level;
-};
-
-// Function to start moving squares when level is 3
-export const startMovingSquares = (grid: GridSquare[][]) => {
-  const interval = setInterval(() => {
-    moveSquares(grid);
-  }, 1000); // Move squares every second
-
-  // Stop moving squares after 30 seconds (for demonstration purposes)
-  setTimeout(() => {
-    clearInterval(interval);
-  }, 30000); // Stop after 30 seconds
-};
-
-// Function to randomly move squares across the screen
-const moveSquares = (grid: GridSquare[][]) => {
-  const gridSize = grid.length;
-  grid.forEach(row => {
-    row.forEach(square => {
-      if (square.isGreen) {
-        const newRow = Math.floor(Math.random() * gridSize);
-        const newCol = Math.floor(Math.random() * gridSize);
-        grid[newRow][newCol] = { ...square, isGreen: true }; // Move the square to a new random position
-      }
-    });
-  });
+  if (level === 2) return 4;
+  if ((level >= 3) && (level <= 5)) return level + 1;
+  if ((level >= 6) && (level <= 8)) return level - 1;
+  if (level === 9) return 6;
+  return 7;
 };

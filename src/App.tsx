@@ -4,43 +4,52 @@ import CountdownTimer from './components/CountdownTimer';
 import GameGrid from './components/GameGrid';
 import ScoreBoard from './components/ScoreBoard';
 import GameOverOverlay from './components/GameOverOverlay';
-import { generateGrid, checkUserSelection, increaseDifficulty, startMovingSquares } from './utils/gameLogic';
+import { generateGrid, checkUserSelection, increaseDifficulty } from './utils/gameLogic';
 import { GridSquare, Score } from './utils/types';
+import { useTheme, useMediaQuery } from '@mui/material';
 
 const App: React.FC = () => {
+  const playerTime = 10;
+
   const [level, setLevel] = useState<number>(1);
   const [grid, setGrid] = useState<GridSquare[][]>([]);
   const [score, setScore] = useState<Score>({ level: 1, timeTaken: 0 });
-  const [time, setTime] = useState(5);
+  const [time, setTime] = useState(0);
   const [showInitialGrid, setShowInitialGrid] = useState(true);
   const [gameOver, setGameOver] = useState(false);
+  const theme = useTheme()
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
-  useEffect(() => {
-    if (level === 3) {
-      startMovingSquares(grid);
-    }
-  }, [level, grid]);
 
   useEffect(() => {
     if (level > 0) {
-      if (!gameOver){
+      if ((!gameOver) && (time === 0)){
 
         const newGrid = generateGrid(level);
         setGrid(newGrid);
-        setTime(5);
-        setShowInitialGrid(true);
         setTimeout(() => {
           setShowInitialGrid(false);
+          setTime(playerTime);
+          setGameOver(false);
         }, 3000);
       }
     } else {
       setGrid([]);
     }
+
   }, [level, gameOver]);
+
+  useEffect(() => {
+    if (!showInitialGrid) {
+      setTime(playerTime);
+    }
+  }, [showInitialGrid]);
 
   const startGame = () => {
     setLevel(increaseDifficulty(level));
     setGameOver(false);
+    setShowInitialGrid(true);
+
   };
 
   const resetGame = () => {
@@ -66,7 +75,6 @@ const App: React.FC = () => {
         if (square.isSelected && square.isGreen) selectedCoords.push([rowIndex, colIndex]);
       })
     );
-    setTime(0);
     let [isSuccess, numCorrect] = checkUserSelection(grid, selectedCoords);
     if (isSuccess) {
       const newScore = {
@@ -74,30 +82,33 @@ const App: React.FC = () => {
         timeTaken: score.timeTaken,
       };
       setScore(newScore);
-      setShowInitialGrid(true);
+      setShowInitialGrid(true); // Show the correct answers
       setTimeout(() => {
         startGame();
-      }, 3000);
+      }, 2000);
     } else {
       console.log("Time's up! Game over.");
+      setShowInitialGrid(true); // Show the correct answers
       setTimeout(() => {
         setGameOver(true);
-      }, 3000);
+      }, 2000);
     }
   };
 
   return (
-    <div className="App">
-      {gameOver ? <GameOverOverlay onTryAgain={resetGame} /> : null}
-      {level === 0 ? (
-        <WelcomeScreen onStartGame={startGame} />
-      ) : (
-        <>
-          <ScoreBoard level={level} />
-          <GameGrid grid={grid} onSquareClick={handleSquareClick} showInitialGrid={showInitialGrid} />
-          <CountdownTimer initialTime={time} onTimeout={handleTimeUp} />
-        </>
-      )}
+    <div className="App flex justify-center items-center h-screen">
+      <div className={isSmallScreen ? "flex flex-col items-center w-75 px-4" : "flex flex-col items-center"}>
+        {gameOver ? <GameOverOverlay onTryAgain={resetGame} /> : null}
+        {level === 0 ? (
+          <WelcomeScreen onStartGame={startGame} />
+        ) : (
+          <>
+            <ScoreBoard level={level} />
+            <GameGrid grid={grid} onSquareClick={handleSquareClick} showInitialGrid={showInitialGrid} />
+            <CountdownTimer initialTime={time} onTimeout={handleTimeUp} />
+          </>
+        )}
+      </div>
     </div>
   );
 };

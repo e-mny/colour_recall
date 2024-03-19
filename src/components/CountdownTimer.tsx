@@ -21,7 +21,7 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({ initialTime, onTimeout 
           setIsTimeout(true);
           return 0;
         }
-        console.log(prevTime - 1);
+        // console.log(prevTime - 1);
         return prevTime - 1;
       });
     }, 1000);
@@ -47,7 +47,7 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({ initialTime, onTimeout 
 
 
   return (
-    <div className="text-center justify-center items-center flex text-3xl">
+    <div className="text-center justify-center items-center flex text-3xl p-4">
       <p>Time Left:</p>
       <p className="m-4 font-bold" style={timeStyle}>{time}</p>s
     </div>
