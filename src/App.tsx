@@ -14,7 +14,7 @@ const App: React.FC = () => {
   const [level, setLevel] = useState<number>(1);
   const [grid, setGrid] = useState<GridSquare[][]>([]);
   const [score, setScore] = useState<Score>({ level: 1, timeTaken: 0 });
-  const [time, setTime] = useState(0);
+  const [time, setTime] = useState(-999);
   const [showInitialGrid, setShowInitialGrid] = useState(true);
   const [gameOver, setGameOver] = useState(false);
   const theme = useTheme()
@@ -23,33 +23,44 @@ const App: React.FC = () => {
 
   useEffect(() => {
     if (level > 0) {
-      if ((!gameOver) && (time === 0)){
+      if ((!gameOver)){
 
         const newGrid = generateGrid(level);
         setGrid(newGrid);
         setTimeout(() => {
-          setShowInitialGrid(false);
-          setTime(playerTime);
-          setGameOver(false);
-        }, 3000);
+            setShowInitialGrid(false);
+            setGameOver(false);
+          }, 3000);
+        }
+      } else {
+        setGrid([]);
       }
-    } else {
-      setGrid([]);
-    }
+      
+    }, [level, gameOver]);
+    
+    useEffect(() => {
+      if (!showInitialGrid) {
+          setTime(playerTime);
+          document.body.style.pointerEvents = 'auto';
+      }
+      else {if (!gameOver){
+        document.body.style.pointerEvents = 'none';
+      }
+      else{
+        document.body.style.pointerEvents = 'auto';
 
-  }, [level, gameOver]);
+      }}
+  }, [showInitialGrid]);
 
   useEffect(() => {
-    if (!showInitialGrid) {
-      setTime(playerTime);
-    }
-  }, [showInitialGrid]);
+    setTime(playerTime + 3);
+  }, [level]);
 
   const startGame = () => {
     setLevel(increaseDifficulty(level));
     setGameOver(false);
     setShowInitialGrid(true);
-
+    
   };
 
   const resetGame = () => {
@@ -105,7 +116,7 @@ const App: React.FC = () => {
           <>
             <ScoreBoard level={level} />
             <GameGrid grid={grid} onSquareClick={handleSquareClick} showInitialGrid={showInitialGrid} />
-            <CountdownTimer initialTime={time} onTimeout={handleTimeUp} />
+            <CountdownTimer initialTime={time} onTimeout={handleTimeUp} level={level} />
           </>
         )}
       </div>

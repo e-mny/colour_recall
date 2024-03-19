@@ -3,14 +3,15 @@ import React, { useState, useEffect } from 'react';
 interface CountdownTimerProps {
   initialTime: number;
   onTimeout: () => void;
+  level: number;
 }
 
-const CountdownTimer: React.FC<CountdownTimerProps> = ({ initialTime, onTimeout }) => {
+const CountdownTimer: React.FC<CountdownTimerProps> = ({ initialTime, onTimeout, level }) => {
   const [time, setTime] = useState(initialTime);
   const [isTimeout, setIsTimeout] = useState(false);
-
+  console.log(time);
   useEffect(() => {
-    setTime(initialTime);
+      setTime(initialTime);
   }, [initialTime]);
 
   useEffect(() => {
@@ -49,7 +50,7 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({ initialTime, onTimeout 
   return (
     <div className="text-center justify-center items-center flex text-3xl p-4">
       <p>Time Left:</p>
-      <p className="m-4 font-bold" style={timeStyle}>{time}</p>s
+      <p className="m-4 font-bold" style={timeStyle}>{time < 0 ? 0 : time > 10 ? 10 : time}</p>s
     </div>
   );
 };
