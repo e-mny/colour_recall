@@ -6,6 +6,8 @@ interface GameOverOverlayProps {
 
 const GameOverOverlay: React.FC<GameOverOverlayProps> = ({ onTryAgain }) => {
     const [showOverlay, setShowOverlay] = useState(false);
+    document.body.style.pointerEvents = 'auto';
+
 
     useEffect(() => {
         // Delay showing the overlay to create a fade-in effect

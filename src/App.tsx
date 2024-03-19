@@ -39,7 +39,7 @@ const App: React.FC = () => {
     }, [level, gameOver]);
     
     useEffect(() => {
-      if ((level == 0) || (gameOver)){
+      if ((level === 0) || (gameOver)){
         document.body.style.pointerEvents = 'all';
       }
       else if (!showInitialGrid) {
@@ -50,7 +50,7 @@ const App: React.FC = () => {
         document.body.style.pointerEvents = 'none';
       }
       else{
-        document.body.style.pointerEvents = 'auto';
+        document.body.style.pointerEvents = 'all';
 
       }}
   }, [showInitialGrid]);
