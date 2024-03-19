@@ -11,7 +11,7 @@ import { useTheme, useMediaQuery } from '@mui/material';
 const App: React.FC = () => {
   const playerTime = 10;
 
-  const [level, setLevel] = useState<number>(1);
+  const [level, setLevel] = useState<number>(0);
   const [grid, setGrid] = useState<GridSquare[][]>([]);
   const [score, setScore] = useState<Score>({ level: 1, timeTaken: 0 });
   const [time, setTime] = useState(-999);
