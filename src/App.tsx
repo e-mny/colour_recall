@@ -39,7 +39,10 @@ const App: React.FC = () => {
     }, [level, gameOver]);
     
     useEffect(() => {
-      if (!showInitialGrid) {
+      if (level == 0){
+        document.body.style.pointerEvents = 'all';
+      }
+      else if (!showInitialGrid) {
           setTime(playerTime);
           document.body.style.pointerEvents = 'auto';
       }

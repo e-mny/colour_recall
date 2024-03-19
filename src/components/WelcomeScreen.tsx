@@ -24,6 +24,7 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onStartGame }) => {
     }, countdown * 1000);
   };
 
+
   const [showCountdown, setShowCountdown] = useState(false);
 
   const pulseAnimation = {
@@ -40,8 +41,10 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onStartGame }) => {
           <p className="mt-8 text-2xl">Memorize where the <span className="text-green-500 uppercase">green</span> diamonds are</p>
           <p className="mb-8 text-2xl">and click on them after they disappear.</p>
           <button className="btn m-6 text-2xl" onClick={() => {
+            document.body.style.pointerEvents = 'none';
             setShowCountdown(true);
             handleStartGame();
+
           }}>Start</button>
         </>
       ) : (
