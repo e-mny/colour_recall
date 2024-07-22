@@ -1,7 +1,7 @@
 {
-  "name": "drcs_assessment",
+  "name": "colour_recall",
   "version": "0.1.0",
-  "homepage": "https://e-mny.github.io/drcs_assessment",
+  "homepage": "https://e-mny.github.io/colour_recall",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.11.4",
