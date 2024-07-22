@@ -1,4 +1,4 @@
-# Memory Game
+# Colour Recall Game
 
 ## Available Scripts
 
